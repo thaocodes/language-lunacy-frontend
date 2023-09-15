@@ -2,19 +2,17 @@ import React from 'react'
 
 interface props {
     language: string;
-    setLanguage: React.Dispatch<React.SetStateAction<string>>; 
-    handleLanguage: (e. React.FormEvent) => void;
+    setLanguage: React.Dispatch<React.SetStateAction<string>>;
+    handleLanguage: (e: React.FormEvent) => void; 
 }
 
 
-const InputField = () => {
+const InputField: React.FC<props> = ({ language, setLanguage, handleLanguage }) => {
 
     return (
         <form
             className="input"
-            onSubmit={(e) => {
-                handleLanguage(e);
-            }}
+            onSubmit={(e) => handleLanguage(e)}
         >
             <input
                 className="input-box"
