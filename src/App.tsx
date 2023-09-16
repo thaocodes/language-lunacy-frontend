@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { mockDeck } from './mock-service/MockDecks';
 import { Deck } from './components/types';
-import FlashcardDeck from './components/SingleDeck';
+import SingleDeck from './components/SingleDeck';
 import InputField from './components/InputField';
 import axios from 'axios'; 
 
@@ -16,8 +16,6 @@ const App: React.FC = () => {
 
     const handleLanguage = (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log("baseURL: ", process.env.REACT_APP_API_BASE_URL);
         
         axios.get(`${process.env.REACT_APP_API_BASE_URL}/${language}/${start}/${end}`)
             
@@ -29,6 +27,7 @@ const App: React.FC = () => {
             })
             .catch(error => {
                 // extract error message from response & set it to error state
+                // if left side falsy (undefined/null) return right side string
                 setError(error.response?.data?.error || "An unexpected error occured")
                 console.log("Error fetching data!", error)
             });
@@ -38,8 +37,7 @@ const App: React.FC = () => {
             setLanguage("");    
             setStart("");
             setEnd("");
-    }
-
+        }
 
 
     return (
@@ -54,9 +52,9 @@ const App: React.FC = () => {
                 setEnd={setEnd}
                 handleLanguage={handleLanguage}
             />
-            {/* display error message if there is one */}
+            {/* if error truthy, display error message */}
             {error && <div className="error-message">{error}</div>}
-            <FlashcardDeck deck={deck} />
+            <SingleDeck deck={deck} />
         </div>
     );
 }

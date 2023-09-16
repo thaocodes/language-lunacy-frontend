@@ -5,10 +5,10 @@ type Props = {
     deck: Deck;
 }
 
-const FlashcardDeck: React.FC<Props> = ({ deck }) => {
+const SingleDeck: React.FC<Props> = ({ deck }) => {
     return (
-        <div>FlashcardDeck</div>
+        <div>A Deck of Flashcards</div>
     )
 };
 
-export default FlashcardDeck;
+export default SingleDeck;

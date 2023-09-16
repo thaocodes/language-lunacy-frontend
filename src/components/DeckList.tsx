@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const FlashcardDeckList = () => {
+export const DeckList = () => {
     return (
-        <div>FlashcardDeckList</div>
+        <div>DeckList</div>
     )
 }
