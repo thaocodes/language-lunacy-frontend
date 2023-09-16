@@ -28,14 +28,14 @@ const InputField: React.FC<props> = ({ language, start, end, setLanguage, setSta
             <input
                 className="start-input"
                 type="number"
-                placeholder='Number'
+                placeholder='start number'
                 value={start}
                 onChange={(e) => setStart(e.target.value)}
             />
             <input
                 className="end-input"
                 type="number"
-                placeholder='Number'
+                placeholder='end number'
                 value={end}
                 onChange={(e) => setEnd(e.target.value)}
             />
