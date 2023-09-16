@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { mockDeck } from './mock-service/MockDecks';
 import { Deck } from './components/types';
-import FlashcardDeck from './components/FlashcardDeck';
+import FlashcardDeck from './components/SingleDeck';
 import InputField from './components/InputField';
 import axios from 'axios'; 
 
