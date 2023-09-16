@@ -7,16 +7,16 @@ interface props {
     setLanguage: React.Dispatch<React.SetStateAction<string>>;
     setStart: React.Dispatch<React.SetStateAction<string>>;
     setEnd: React.Dispatch<React.SetStateAction<string>>;
-    handleLanguage: (e: React.FormEvent) => void; 
+    createDeck: (e: React.FormEvent) => void; 
 }
 
 
-const InputField: React.FC<props> = ({ language, start, end, setLanguage, setStart, setEnd, handleLanguage }) => {
+const InputField: React.FC<props> = ({ language, start, end, setLanguage, setStart, setEnd, createDeck }) => {
 
     return (
         <form
             className="input"
-            onSubmit={(e) => handleLanguage(e)}
+            onSubmit={(e) => createDeck(e)}
         >
             <input
                 className="language-input"
