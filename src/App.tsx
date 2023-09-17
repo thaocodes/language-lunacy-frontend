@@ -14,6 +14,7 @@ const App: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null); // no deck selected yet
     const [deckList, setDeckList] = useState<Deck[]>([]);
+    const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState<number>(0);
     
     const createDeck = (e: React.FormEvent) => {
         e.preventDefault();
@@ -58,6 +59,10 @@ const App: React.FC = () => {
             setSelectedDeck(deck)
         }
 
+        const nextFlashcard = () => {
+            setCurrentFlashcardIndex(prevCardIndex => prevCardIndex + 1);
+        }
+
     return (
         <div className="App">
             <span className="heading">Language Lunacy</span>
@@ -75,6 +80,14 @@ const App: React.FC = () => {
             <SingleDeck 
                 selectedDeck={selectedDeck}
                 setSelectedDeck={setSelectedDeck}
+                decklist={deckList}
+                setDecklist={setDeckList}
+                currentFlashcardIndex={currentFlashcardIndex}
+                // pass callback functions 
+                onEasy={nextFlashcard}
+                onHard={nextFlashcard}
+                nextFlashcard={nextFlashcard}
+                
             />
             <Sidebar
                 deckList={deckList}
