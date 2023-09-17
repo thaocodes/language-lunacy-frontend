@@ -31,8 +31,6 @@ const App: React.FC = () => {
                 console.log("Deck: ", newDeck)
                 // add new deck to decklist
                 // updates `decklist` state by using previous state `oldDeckList` to create a new state
-                // `oldDeckList` = param name for callback we're passing to `setDeckList`
-                // represents current state of `deckList` before this update is applied
                 setDeckList(oldDeckList => [...oldDeckList, newDeck]);
                 setError("");    // reset error state if successful response
                 console.log("RESPONSE: ", response);
@@ -54,13 +52,36 @@ const App: React.FC = () => {
 
         // helper that sets the selected deck
         // deck is a param of type `Deck` that function gets called with
-        // gets set as selectedDeck when `setSelectedDecl(Deck)` is called 
+        // gets set as selectedDeck when `setSelectedDecl(deck)` is called 
         const handleSelectDeck = (deck: Deck) => {
-            setSelectedDeck(deck)
+            setSelectedDeck(deck);
+            setCurrentFlashcardIndex(0); // reset flashcard index whenever new deck is selected
         }
 
+        // make sure new flashcard index does not go out of bounds
+        // passing callback function (also arrow) to `setCurrentFlashcardIndex`
+        // Math.min takes 2 numbers & returns smaller number
         const nextFlashcard = () => {
-            setCurrentFlashcardIndex(prevCardIndex => prevCardIndex + 1);
+            // safely check length of flashcards array
+            // if `flashcards` is undefined (selectedDeck is null), return 1 to avoid errors
+            setCurrentFlashcardIndex(prevCardIndex => Math.min(prevCardIndex + 1, (selectedDeck?.flashcards?.length  || 1) - 1));
+        }
+
+        // when clicked, removes flashcard from deck
+        const onEasy = () => {
+            // checks if selectedDeck is not null first
+            if (selectedDeck) { 
+                // splice removes items from an array
+                // takes 2 args, start index (where to start removing items) & the # of items to remove
+                selectedDeck.flashcards.splice(currentFlashcardIndex, 1);  // removes 1 item at index `currentFlashcardIndex`
+                // updates current flashcard index
+                // Math.min ensures new index doesn't go beyond last index of updated flashcards array
+                setCurrentFlashcardIndex(prevCardIndex => Math.min(prevCardIndex, selectedDeck.flashcards.length - 1));
+            }
+        }
+
+        const onHard = () => {
+            nextFlashcard();  // move to next flashcard
         }
 
     return (
@@ -81,16 +102,17 @@ const App: React.FC = () => {
                 selectedDeck={selectedDeck}
                 setSelectedDeck={setSelectedDeck}
                 decklist={deckList}
-                setDecklist={setDeckList}
                 currentFlashcardIndex={currentFlashcardIndex}
                 // pass callback functions 
-                onEasy={nextFlashcard}
-                onHard={nextFlashcard}
+                onEasy={onEasy}
+                onHard={onHard}
                 nextFlashcard={nextFlashcard}
                 
             />
             <Sidebar
                 deckList={deckList}
+                setDecklist={setDeckList}
+                selectedDeck={selectedDeck}
                 handleSelectDeck={handleSelectDeck}
             />
         </div>
