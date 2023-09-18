@@ -11,78 +11,86 @@ const App: React.FC = () => {
     const [language, setLanguage] = useState<string>("");
     const [start, setStart] = useState<string>("");
     const [end, setEnd] = useState<string>("");
-    const [error, setError] = useState<string>("");
-    const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null); // no deck selected yet
     const [deckList, setDeckList] = useState<Deck[]>([]);
-    const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState<number>(0);
-    
+    const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
+    const [flashcardIndex, setFlashcardIndex] = useState<number>(0); // flashcards shown 1 by 1, first in deck is at index 0
+    const [error, setError] = useState<string>(""); 
+
+    // inputting language/start/end creates a new deck
     const createDeck = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         axios.get(`${process.env.REACT_APP_API_BASE_URL}/${language}/${start}/${end}`)
-            
             .then(response => {
                 const newDeck: Deck = {
-                    id: Date.now(),   // generate unique id
+                    id: Date.now(),  // generate unique id 
                     name: language,
                     flashcards: response.data   // response data is array of flashcards
                 };
+                console.log("Deck: ", newDeck);
 
-                console.log("Deck: ", newDeck)
                 // add new deck to decklist
-                // updates `decklist` state by using previous state `oldDeckList` to create a new state
-                setDeckList(oldDeckList => [...oldDeckList, newDeck]);
-                setError("");    // reset error state if successful response
+                setDeckList(deckList => [...deckList, newDeck]);
+                setError("");
                 console.log("RESPONSE: ", response);
                 console.log("RESPONSE.DATA: ", response.data);
             })
             .catch(error => {
-                // extract error message from response & set it to error state
-                // if left side falsy (undefined/null) return right side string
-                setError(error.response?.data?.error || "An unexpected error occured")
+                setError(error.response?.data?.error || "An unexpected error occurred!")
                 console.log("Error fetching data!", error)
             });
-            console.log(language);
-
-            // reset fields after submitting
-            setLanguage("");    
+            // reset fields after submission
+            setLanguage("");
             setStart("");
             setEnd("");
         };
 
-        // helper that sets the selected deck
-        // deck is a param of type `Deck` that function gets called with
-        // gets set as selectedDeck when `setSelectedDecl(deck)` is called 
-        const handleSelectDeck = (deck: Deck) => {
-            setSelectedDeck(deck);
-            setCurrentFlashcardIndex(0); // reset flashcard index whenever new deck is selected
-        }
+    // sets selected deck to this deck
+    const handleSelectDeck = (deck: Deck) => {
+        setSelectedDeck(deck);
+        // reset flashcard index whenever new deck is selected
+        setFlashcardIndex(0);   
+    }
 
-        // make sure new flashcard index does not go out of bounds
-        // passing callback function (also arrow) to `setCurrentFlashcardIndex`
-        // Math.min takes 2 numbers & returns smaller number
-        const nextFlashcard = () => {
-            // safely check length of flashcards array
-            // if `flashcards` is undefined (selectedDeck is null), return 1 to avoid errors
-            setCurrentFlashcardIndex(prevCardIndex => Math.min(prevCardIndex + 1, (selectedDeck?.flashcards?.length  || 1) - 1));
+    // prevFlashcard holds state of flashcard before update
+    const nextFlashcard = () => {
+        if (selectedDeck) {
+            // if `flashcards` undefined (selectedDeck is null) return 1 to avoid errors
+            setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard + 1, (selectedDeck?.flashcards?.length || 1) -1));
         }
+    }
 
-        // when clicked, removes flashcard from deck
-        const onEasy = () => {
-            // checks if selectedDeck is not null first
-            if (selectedDeck) { 
-                // splice removes items from an array
-                // takes 2 args, start index (where to start removing items) & the # of items to remove
-                selectedDeck.flashcards.splice(currentFlashcardIndex, 1);  // removes 1 item at index `currentFlashcardIndex`
-                // updates current flashcard index
-                // Math.min ensures new index doesn't go beyond last index of updated flashcards array
-                setCurrentFlashcardIndex(prevCardIndex => Math.min(prevCardIndex, selectedDeck.flashcards.length - 1));
-            }
+    // when clicked, removes flashcard from deck
+    const onEasy = (flashcardId: number) => {
+        if (selectedDeck) {
+            // remove flashcard with that id
+            const updatedFlashcards = selectedDeck.flashcards.filter((flashcard) => flashcard.id !== flashcardId);  
+            
+            // update `selectedDeck` 
+            setSelectedDeck(prevDeck => {
+                if (prevDeck) {  // makes sure prev state isn't null
+                    // returns new state object where `flashcards` is updated
+                    return {
+                        ...prevDeck, 
+                        flashcards: updatedFlashcards
+                    };
+                }
+                // if `prevDeck` is null, return null
+                return null;
+            });
+            // updates `flashcardIndex`, makes sure it doesn't go out of bounds
+            // after removing a flashcard 
+            setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1));
         }
+    };
+    
 
-        const onHard = () => {
-            nextFlashcard();  // move to next flashcard
+    // keeps card in deck, moves to next card
+    const onHard = () => {
+        if (selectedDeck) {
+            nextFlashcard();
         }
+    }
 
     return (
         <div className="App">
@@ -102,12 +110,11 @@ const App: React.FC = () => {
                 selectedDeck={selectedDeck}
                 setSelectedDeck={setSelectedDeck}
                 decklist={deckList}
-                currentFlashcardIndex={currentFlashcardIndex}
+                flashcardIndex={flashcardIndex}
                 // pass callback functions 
                 onEasy={onEasy}
                 onHard={onHard}
                 nextFlashcard={nextFlashcard}
-                
             />
             <Sidebar
                 deckList={deckList}
@@ -120,3 +127,14 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
