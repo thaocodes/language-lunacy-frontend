@@ -5,19 +5,27 @@ import {
     MDBCardText, MDBCardBody, MDBCardImage, 
     MDBTypography, MDBIcon, MDBBtn 
 } from 'mdb-react-ui-kit';
-import './stylesheets/flashcard.css';
+import '../stylesheets/flashcard.css';
 
 
 // receives flashcard object, 2 callback functions
 interface FlashcardProps  {
-    flashcard: Flashcard;
-    onEasy: () => void;
+    flashcard?: Flashcard;
+    onEasy: (flashcardId: number) => void;
     onHard: () => void;
 }
 
 const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, onEasy, onHard }) => {
     const [isFlipped, setIsFlipped] = useState<boolean>(false); // initial state shows {language} word
+
+    console.log("Flashcard: ", flashcard); 
+    console.log("Is Flipped: ", isFlipped);
     
+    if (!flashcard) {
+        console.log("NO FLASHCARD!!!?!?!?")
+        return null;    // return null or loading spinner, placeholder content
+
+    }
         
     return (
         <section className="vh-100">
@@ -46,13 +54,15 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, onEasy, onHard }
                                         <MDBRow className="pt-1">
                                             <MDBCol size="12" className="mb-3">
                                                 <MDBCardText className="text-muted">
-                                                    {/* if `isFlipped` is true, display English */}
-                                                    {isFlipped ? flashcard.english : flashcard.language}
+                                                    {/* if `isFlipped` is true, display English, else display language
+                                                        check if those properties exist on flashcard object */}
+                                                    {isFlipped ? flashcard?.english : flashcard?.language}
                                                 </MDBCardText>
                                             </MDBCol>
                                         </MDBRow>
+                                        <MDBIcon icon="arrow-right" className="float-end" onClick={() => setIsFlipped(!isFlipped)} />
                                         <div className="d-flex justify-content-start">
-                                            <MDBBtn onClick={onEasy}>Easy</MDBBtn>
+                                            <MDBBtn onClick={() => onEasy(flashcard.id)}>Easy</MDBBtn>
                                             <MDBBtn onClick={onHard}>Hard</MDBBtn>
                                         </div>
                                     </MDBCardBody>
