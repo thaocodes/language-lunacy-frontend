@@ -5,25 +5,25 @@ import SingleFlashcard from './SingleFlashcard';
 type DeckProps = {
     selectedDeck: Deck | null;
     decklist: Deck[];
-    currentFlashcardIndex: number;
+    flashcardIndex: number;
     setSelectedDeck: React.Dispatch<React.SetStateAction<Deck | null>>;
-    onEasy: () => void;
+    onEasy: (flashcardId: number) => void;
     onHard: () => void;
     nextFlashcard: () => void;
 }
 
-const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, currentFlashcardIndex, setSelectedDeck, onEasy, onHard, nextFlashcard  }) => {
+const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardIndex, setSelectedDeck, onEasy, onHard, nextFlashcard  }) => {
 
     if (selectedDeck) {
-        const currentFlashcard = selectedDeck.flashcards[currentFlashcardIndex];
+        const currentFlashcard = selectedDeck.flashcards[flashcardIndex];
 
         // check if currentFlashcardIndex within bounds
-        if (currentFlashcardIndex >= 0 && currentFlashcardIndex < selectedDeck.flashcards.length) {
+        if (flashcardIndex >= 0 && flashcardIndex < selectedDeck.flashcards.length) {
 
             return (
                 <>
                     {/* flashcard counter */}
-                    <div> Card {currentFlashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
+                    <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
                     <SingleFlashcard
                         flashcard={currentFlashcard}
                         onEasy={onEasy}
