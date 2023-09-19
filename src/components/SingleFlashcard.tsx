@@ -11,15 +11,20 @@ import '../stylesheets/flashcard.css';
 // receives flashcard object, 2 callback functions
 interface FlashcardProps  {
     flashcard?: Flashcard;
+    language: string;
     onEasy: (flashcardId: number) => void;
     onHard: () => void;
 }
 
-const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, onEasy, onHard }) => {
+const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy, onHard }) => {
     const [isFlipped, setIsFlipped] = useState<boolean>(false); // initial state shows {language} word
 
     console.log("Flashcard: ", flashcard); 
     console.log("Is Flipped: ", isFlipped);
+
+    console.log("LANGUAGE FLASHCARD: ", language);
+    console.log("flashcard?.english: ", flashcard?.english);
+    console.log("flashcard?.[language]: ", flashcard?.[language]);
     
     if (!flashcard) {
         console.log("NO FLASHCARD!!!?!?!?")
@@ -56,7 +61,7 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, onEasy, onHard }
                                                 <MDBCardText className="text-muted">
                                                     {/* if `isFlipped` is true, display English, else display language
                                                         check if those properties exist on flashcard object */}
-                                                    {isFlipped ? flashcard?.english : flashcard?.language}
+                                                    {isFlipped ? flashcard?.english : flashcard?.[language]}
                                                 </MDBCardText>
                                             </MDBCol>
                                         </MDBRow>
