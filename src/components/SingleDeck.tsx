@@ -5,6 +5,7 @@ import SingleFlashcard from './SingleFlashcard';
 type DeckProps = {
     selectedDeck: Deck | null;
     decklist: Deck[];
+    language: string;
     flashcardIndex: number;
     setSelectedDeck: React.Dispatch<React.SetStateAction<Deck | null>>;
     onEasy: (flashcardId: number) => void;
@@ -12,7 +13,7 @@ type DeckProps = {
     nextFlashcard: () => void;
 }
 
-const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardIndex, setSelectedDeck, onEasy, onHard, nextFlashcard  }) => {
+const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, language, flashcardIndex, setSelectedDeck, onEasy, onHard, nextFlashcard  }) => {
 
     if (selectedDeck) {
         const currentFlashcard = selectedDeck.flashcards[flashcardIndex];
@@ -28,6 +29,7 @@ const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardInde
                         flashcard={currentFlashcard}
                         onEasy={onEasy}
                         onHard={onHard}
+                        language={language}
                     />
                 </>
             );

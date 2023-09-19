@@ -28,6 +28,7 @@ const App: React.FC = () => {
                     flashcards: response.data   // response data is array of flashcards
                 };
                 console.log("Deck: ", newDeck);
+                console.log("Language @ deck creation: ", language);
 
                 // add new deck to decklist
                 setDeckList(deckList => [...deckList, newDeck]);
@@ -63,17 +64,16 @@ const App: React.FC = () => {
     // when clicked, removes flashcard from deck
     const onEasy = (flashcardId: number) => {
         if (selectedDeck) {
+            console.log(flashcardId);
+
             // remove flashcard with that id
-            const updatedFlashcards = selectedDeck.flashcards.filter((flashcard) => flashcard.id !== flashcardId);  
+            const updatedFlashcards = selectedDeck.flashcards.filter(flashcard => flashcard.id !== flashcardId);  
             
             // update `selectedDeck` 
             setSelectedDeck(prevDeck => {
                 if (prevDeck) {  // makes sure prev state isn't null
                     // returns new state object where `flashcards` is updated
-                    return {
-                        ...prevDeck, 
-                        flashcards: updatedFlashcards
-                    };
+                    return { ...prevDeck, flashcards: updatedFlashcards };
                 }
                 // if `prevDeck` is null, return null
                 return null;
@@ -107,6 +107,7 @@ const App: React.FC = () => {
             {/* if error truthy, display error message */}
             {error && <div className="error-message">{error}</div>}
             <SingleDeck 
+                language={language}
                 selectedDeck={selectedDeck}
                 setSelectedDeck={setSelectedDeck}
                 decklist={deckList}
