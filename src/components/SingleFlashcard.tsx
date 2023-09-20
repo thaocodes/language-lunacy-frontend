@@ -24,7 +24,7 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
 
     console.log("LANGUAGE FLASHCARD: ", language);
     console.log("flashcard?.english: ", flashcard?.english);
-    console.log("flashcard?.[language]: ", flashcard?.[language]);
+    console.log("flashcard?.[language]: ", flashcard?.[language]); // access property dynamically 
     
     if (!flashcard) {
         console.log("NO FLASHCARD!!!?!?!?")
