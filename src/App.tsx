@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Deck } from './components/types';
+import { Deck, Flashcard } from './components/types';
 import SingleDeck from './components/SingleDeck';
 import InputField from './components/InputField';
 import axios from 'axios'; 
@@ -24,9 +24,21 @@ const App: React.FC = () => {
             .then(response => {
                 const newDeck: Deck = {
                     id: Date.now(),  // generate unique id 
-                    name: language,
-                    flashcards: response.data   // response data is array of flashcards
+                    name: language.toLowerCase(),
+                    // response data is array of flashcards
+                    flashcards: response.data.map((flashcard: any, index: number) => 
+                        ({ 
+                            id: index,
+                            number: flashcard.number,
+                            english: flashcard.english,
+                            difficulty: flashcard.difficulty,
+                            // set dynamic language property `key` on each Flashcard object
+                            // extract value from `Flashcard` object using key (language name)
+                            // adds new poperty to flashcard where key = name of `language` & value = translated word in that `language`
+                            [language.toLowerCase()]: flashcard[language.toLowerCase()] 
+                        })) as Flashcard[]
                 };
+
                 console.log("Deck: ", newDeck);
                 console.log("Language @ deck creation: ", language);
 
@@ -64,8 +76,7 @@ const App: React.FC = () => {
     // when clicked, removes flashcard from deck
     const onEasy = (flashcardId: number) => {
         if (selectedDeck) {
-            console.log(flashcardId);
-
+            console.log("FLASHCARD ID: ", flashcardId);
             // remove flashcard with that id
             const updatedFlashcards = selectedDeck.flashcards.filter(flashcard => flashcard.id !== flashcardId);  
             
@@ -80,7 +91,12 @@ const App: React.FC = () => {
             });
             // updates `flashcardIndex`, makes sure it doesn't go out of bounds
             // after removing a flashcard 
-            setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1));
+            if (updatedFlashcards.length === 0) {
+                alert("No more flashcards in deck! Please create a new deck :D");
+                setFlashcardIndex(0);  // reset to first flashcard if deck is empty 
+            } else {
+                setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1) || 0); // check bounds
+            }
         }
     };
     
@@ -88,9 +104,13 @@ const App: React.FC = () => {
     // keeps card in deck, moves to next card
     const onHard = () => {
         if (selectedDeck) {
-            nextFlashcard();
+                if (flashcardIndex >= (selectedDeck?.flashcards?.length || 1) - 1) {
+                    setFlashcardIndex(0);  // reset to first flashcard if it was the last card
+                } else {
+                    nextFlashcard();
+                }
+            }
         }
-    }
 
     return (
         <div className="App">
