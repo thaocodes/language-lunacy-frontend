@@ -26,8 +26,9 @@ const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardInde
                     {/* flashcard counter */}
                     <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
                     <SingleFlashcard
-                        flashcard={currentFlashcard}
-                        onEasy={onEasy}
+                        flashcard={currentFlashcard}  // pass current flashcard in the iteration
+                        // pass flashcard id to onEasy function
+                        onEasy={() => onEasy(currentFlashcard.id)}
                         onHard={onHard}
                         language={selectedDeck.name}   // passing name of deck as language prop
                     />
