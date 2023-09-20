@@ -2,10 +2,9 @@
 export interface Flashcard {
     id: number;
     number: number;
-    language: string;
     english: string;
     difficulty: string;
-    [key: string]: string | number;   // adding an index signature 
+    [key: string]: string | number;   // allows for dynamic language property, adding an index signature 
 }
 
 export interface Deck {
