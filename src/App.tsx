@@ -124,19 +124,14 @@ const App: React.FC = () => {
             {/* if error truthy, display error message */}
             {error && <div className="error-message">{error}</div>}
             <SingleDeck 
-                language={language}
                 selectedDeck={selectedDeck}
-                setSelectedDeck={setSelectedDeck}
-                decklist={deckList}
                 flashcardIndex={flashcardIndex}
                 onEasy={onEasy}
                 onHard={onHard}
-                nextFlashcard={nextFlashcard}
             />
             <Sidebar
                 deckList={deckList}
                 setDecklist={setDeckList}
-                selectedDeck={selectedDeck}
                 handleSelectDeck={handleSelectDeck}
             />
         </div>

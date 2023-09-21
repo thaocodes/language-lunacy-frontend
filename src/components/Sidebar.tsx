@@ -4,16 +4,12 @@ import '../stylesheets/flashcard.css';
 
 type Props = {
     deckList: Deck[];
-    selectedDeck: Deck | null;
     handleSelectDeck: (deck: Deck) => void;
     setDecklist: React.Dispatch<React.SetStateAction<Deck[]>>;
 }
 
 // map over deckList to display each deck
-// when a deck is clicked, handleSelectDeck will be called with the clicked deck as the arg
-// to select that deck
-
-const Sidebar: React.FC<Props> = ({ deckList, selectedDeck, handleSelectDeck, setDecklist }) => {
+const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist }) => {
      // if deck.id does not match id, return it
     const deleteDeck = (id: number) => {
         setDecklist(deckList.filter((deck) => deck.id !== id));
@@ -24,6 +20,7 @@ const Sidebar: React.FC<Props> = ({ deckList, selectedDeck, handleSelectDeck, se
             <h2>Decks</h2>
             {deckList.map((deck) => (
                 <div key={deck.id} className="deck-item">
+                     {/* when deck is clicked, handleSelectDeck will be called w/ the clicked deck as arg */}
                     <div className="deck-name" onClick={() => handleSelectDeck(deck)}>
                         {deck.name} ({deck.flashcards.length} cards)
                     </div>

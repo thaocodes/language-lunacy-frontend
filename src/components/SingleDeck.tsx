@@ -3,17 +3,13 @@ import { Deck } from './types';
 import SingleFlashcard from './SingleFlashcard';
 
 type DeckProps = {
-    language: string; 
     selectedDeck: Deck | null;
-    decklist: Deck[];
     flashcardIndex: number;
-    setSelectedDeck: React.Dispatch<React.SetStateAction<Deck | null>>;
     onEasy: (flashcardId: number) => void;
     onHard: () => void;
-    nextFlashcard: () => void;
 }
 
-const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardIndex, setSelectedDeck, onEasy, onHard, nextFlashcard  }) => {
+const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, flashcardIndex, onEasy, onHard }) => {
 
     if (selectedDeck) {
         const currentFlashcard = selectedDeck.flashcards[flashcardIndex];
@@ -27,10 +23,9 @@ const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, decklist, flashcardInde
                     <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
                     <SingleFlashcard
                         flashcard={currentFlashcard}  // pass current flashcard in the iteration
-                        // pass flashcard id to onEasy function
-                        onEasy={() => onEasy(currentFlashcard.id)}
+                        onEasy={onEasy}
                         onHard={onHard}
-                        language={selectedDeck.name}   // passing name of deck as language prop
+                        language={selectedDeck.name}   // pass name of deck as language prop
                     />
                 </>
             );

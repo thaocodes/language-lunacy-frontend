@@ -22,12 +22,11 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
     console.log("Flashcard: ", flashcard); 
     console.log("Is Flipped: ", isFlipped);
 
-    console.log("LANGUAGE FLASHCARD: ", language);
     console.log("flashcard?.english: ", flashcard?.english);
     console.log("flashcard?.[language]: ", flashcard?.[language]); // access property dynamically 
     
     if (!flashcard) {
-        console.log("NO FLASHCARD!!!?!?!?")
+        console.log("NO FLASHCARD!!")
         return null;    // return null or loading spinner, placeholder content
 
     }
