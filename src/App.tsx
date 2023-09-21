@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Deck, Flashcard } from './components/types';
 import SingleDeck from './components/SingleDeck';
@@ -15,6 +15,23 @@ const App: React.FC = () => {
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
     const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
+
+
+    // retrieves persisted decks through local storage
+    useEffect(() => {
+        const data = localStorage.getItem("deck-list");
+        if (data) {
+        setDeckList(JSON.parse(data));
+        } else {
+        setDeckList([]);  // empty deck list?
+        }
+    }, []);
+
+    // persists decks to local storage
+    useEffect(() => {
+        localStorage.setItem("deck-list", JSON.stringify(deckList));
+    });
+    
 
     // inputting language/start/end creates a new deck
     const createDeck = (e: React.FormEvent) => {
