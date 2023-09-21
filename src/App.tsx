@@ -13,7 +13,7 @@ const App: React.FC = () => {
     const [end, setEnd] = useState<string>("");
     const [deckList, setDeckList] = useState<Deck[]>([]);
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
-    const [flashcardIndex, setFlashcardIndex] = useState<number>(0); // flashcards shown 1 by 1, first in deck is at index 0
+    const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
 
     // inputting language/start/end creates a new deck
@@ -32,21 +32,18 @@ const App: React.FC = () => {
                             number: flashcard.number,
                             english: flashcard.english,
                             difficulty: flashcard.difficulty,
-                            // set dynamic language property `key` on each Flashcard object
-                            // extract value from `Flashcard` object using key (language name)
-                            // adds new poperty to flashcard where key = name of `language` & value = translated word in that `language`
+                            
+                            // adds new property to flashcard
+                            // key = name of `language` & value = translated word in that `language`
                             [language.toLowerCase()]: flashcard[language.toLowerCase()] 
                         })) as Flashcard[]
                 };
 
-                console.log("Deck: ", newDeck);
-                console.log("Language @ deck creation: ", language);
-
-                // add new deck to decklist
+                // spread all deck objects from deckList, then add new deck to end of list
                 setDeckList(deckList => [...deckList, newDeck]);
                 setError("");
-                console.log("RESPONSE: ", response);
-                console.log("RESPONSE.DATA: ", response.data);
+                
+                console.log("RESPONSE DATA: ", response.data);
             })
             .catch(error => {
                 setError(error.response?.data?.error || "An unexpected error occurred!")
@@ -74,33 +71,33 @@ const App: React.FC = () => {
     }
 
     // when clicked, removes flashcard from deck
-    const onEasy = (flashcardId: number) => {
+    const onEasy = (id: number) => {
         if (selectedDeck) {
-            console.log("FLASHCARD ID: ", flashcardId);
+            console.log("FLASHCARD ID: ", id);
             // remove flashcard with that id
-            const updatedFlashcards = selectedDeck.flashcards.filter(flashcard => flashcard.id !== flashcardId);  
+            const updatedFlashcards = selectedDeck.flashcards.filter(flashcard => flashcard.id !== id);  
             
             // update `selectedDeck` 
             setSelectedDeck(prevDeck => {
-                if (prevDeck) {  // makes sure prev state isn't null
+                // make sure prev state isn't null
+                if (prevDeck) {  
                     // returns new state object where `flashcards` is updated
                     return { ...prevDeck, flashcards: updatedFlashcards };
                 }
                 // if `prevDeck` is null, return null
                 return null;
             });
-            // updates `flashcardIndex`, makes sure it doesn't go out of bounds
+            // update `flashcardIndex`, make sure this isn't out of bounds
             // after removing a flashcard 
             if (updatedFlashcards.length === 0) {
                 alert("No more flashcards in deck! Please create a new deck :D");
                 setFlashcardIndex(0);  // reset to first flashcard if deck is empty 
             } else {
-                setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1) || 0); // check bounds
+                setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1) || 0); 
             }
         }
     };
     
-
     // keeps card in deck, moves to next card
     const onHard = () => {
         if (selectedDeck) {
@@ -132,7 +129,6 @@ const App: React.FC = () => {
                 setSelectedDeck={setSelectedDeck}
                 decklist={deckList}
                 flashcardIndex={flashcardIndex}
-                // pass callback functions 
                 onEasy={onEasy}
                 onHard={onHard}
                 nextFlashcard={nextFlashcard}
