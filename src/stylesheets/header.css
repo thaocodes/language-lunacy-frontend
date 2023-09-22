@@ -1,0 +1,24 @@
+.header {
+    background: linear-gradient(90deg, #aea4e3, #d3ffe8);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-instruction {
+    margin-top: 1px;
+    margin-bottom: 30px;
+    color: #FFFFFF; /* White Color Text */
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+
+.app-title {
+    font-size: 3rem; /* Big Bold Font */
+    font-weight: bold; 
+    color: #FFFFFF; /* White Color Text */
+    margin-bottom: 10px;
+}
