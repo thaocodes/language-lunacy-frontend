@@ -1,0 +1,25 @@
+.sidebar {
+    background-color: #e0e0e0;
+    width: 250px;
+    height: 100vh; /* Set the height to 100% of the viewport height to span from top to bottom. */
+    padding: 20px;
+    position: fixed; /* Keep the sidebar fixed on the screen. */
+}
+
+.deck-item {
+    background-color: #f5f5f5; /* Lighter gray background for each deck. */
+    margin-bottom: 15px; /* Spacing between deck items. */
+    border-radius: 5px; /* Round the corners a bit for aesthetics. */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Padding inside each deck item. */
+}
+
+.delete-button {
+    background-color: transparent;
+    color: #dc3545;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
