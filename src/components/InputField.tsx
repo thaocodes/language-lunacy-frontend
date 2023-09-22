@@ -1,4 +1,5 @@
 import React from 'react'
+import '../stylesheets/inputfield.css';
 
 interface props {
     language: string;

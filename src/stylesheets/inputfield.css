@@ -1,0 +1,27 @@
+.input {
+    display: flex;
+    gap: 10px; /* Creates a little space/separation in between each of the input fields. */
+}
+
+
+.language-input {
+    width: 150px; /* Width of Language Input */
+}
+
+.start-input,
+.end-input {
+    width: 90px; /* Width of Start and End Input */
+}
+
+.input-submit {
+    background: linear-gradient(90deg, #cfecd0, #ffc5ca);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 5px 10px;   /* make button larger */
+    font-size: 1rem; 
+    font-weight: bold;
+}
+.input-submit:hover {
+    background: #99fbc6; /* Change color on hover */
+}
