@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Deck, Flashcard } from './components/types';
 import SingleDeck from './components/SingleDeck';
-import InputField from './components/InputField';
 import axios from 'axios'; 
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 
 
 const App: React.FC = () => {
@@ -31,7 +31,7 @@ const App: React.FC = () => {
     useEffect(() => {
         localStorage.setItem("deck-list", JSON.stringify(deckList));
     });
-    
+
 
     // inputting language/start/end creates a new deck
     const createDeck = (e: React.FormEvent) => {
@@ -128,8 +128,8 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <span className="heading">Language Lunacy</span>
-            <InputField 
+            <span className="heading"></span>
+            <Header 
                 language={language}
                 start={start}
                 end={end}
