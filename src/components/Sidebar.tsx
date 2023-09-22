@@ -1,7 +1,8 @@
 import React from 'react'
 import { Deck } from './types';
+import { FaTrash } from 'react-icons/fa';
 import '../stylesheets/sidebar.css';
-import { MDBBtn, MDBIcon, MDBListGroup, MDBListGroupItem } from 'mdb-react-ui-kit';
+
 
 type Props = {
     deckList: Deck[];
@@ -16,28 +17,35 @@ const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist }) =
         setDecklist(deckList.filter((deck) => deck.id !== id));
     };
 
+    // takes a string, uppercases first letter 
+    const capitalizeDeckName = (string: string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1); // returns string from 1st index to the end
+    }
+
     return (
         <div className="sidebar">
-            <h2>Decks</h2>
-            <MDBListGroup className="list-group-flush">
-                {deckList.map((deck) => (
-                    // when deck is clicked, handleSelectDeck will be called w/ the clicked deck as arg 
-                    <MDBListGroupItem key={deck.id} className="deck-item" onClick={() => handleSelectDeck(deck)}>
-                        <span>{deck.name} ({deck.flashcards.length} cards)</span>
-                        {/* prevent clicking delete button from also triggering `handleSelectDeck` */}
-                        <MDBBtn 
-                            floating 
-                            tag='a' 
-                            color='danger'
-                            size='sm'
-                            className='ml-1'
-                            onClick={(e) => { e.stopPropagation(); deleteDeck(deck.id) }}
-                        >
-                            <MDBIcon fas icon='trash' /> 
-                        </MDBBtn>
-                    </MDBListGroupItem>
-                ))}
-            </MDBListGroup>
+            <div className="sidebar-header">
+                <h2>Decks</h2>
+                <div className="deck-instruction">
+                    {deckList.length > 0 ? 'Select a Deck to Start' : 'Create a Deck!'}
+                </div>
+                <ul className="deck-list">
+                    {deckList.map((deck) => (
+                        // when deck is clicked, handleSelectDeck will be called w/ the clicked deck as arg 
+                        <li key={deck.id} className="deck-item" onClick={() => handleSelectDeck(deck)}>
+                            <div className="deck-name">{capitalizeDeckName(deck.name)}</div>
+                            <div className="card-count">({deck.flashcards.length} cards)</div>
+                            {/* prevent clicking delete button from also triggering `handleSelectDeck` */}
+                            <button 
+                                className="delete-button"
+                                onClick={(e) => { e.stopPropagation(); deleteDeck(deck.id) }}
+                            > 
+                                <FaTrash />  {/* trash icon */}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
