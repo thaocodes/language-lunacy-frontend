@@ -107,7 +107,6 @@ const App: React.FC = () => {
             // update `flashcardIndex`, make sure this isn't out of bounds
             // after removing a flashcard 
             if (updatedFlashcards.length === 0) {
-                alert("No more flashcards in deck! Please create a new deck :D");
                 setFlashcardIndex(0);  // reset to first flashcard if deck is empty 
             } else {
                 setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard, updatedFlashcards.length - 1) || 0); 
@@ -127,7 +126,7 @@ const App: React.FC = () => {
         }
 
     return (
-        <div className="App">
+        <div className="App app-container">
             <span className="heading"></span>
             <Header 
                 language={language}
