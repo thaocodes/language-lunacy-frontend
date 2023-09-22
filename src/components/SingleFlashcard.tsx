@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Flashcard } from './types';
 import { 
     MDBCol, MDBContainer, MDBRow, MDBCard, 
-    MDBCardText, MDBCardBody, MDBCardImage, 
+    MDBCardText, MDBCardBody,
     MDBTypography, MDBIcon, MDBBtn 
 } from 'mdb-react-ui-kit';
 import '../stylesheets/flashcard.css';
@@ -31,22 +31,17 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
 
     }
         
+
     return (
-        <section className="vh-100">
+        <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
             <MDBContainer className="py-5 h-100">
                 <MDBRow className="justify-content-center align-items-center h-100">
                     <MDBCol lg="6" className="mb-4 mb-lg-0">
-                        <MDBCard className="mb-3">
+                        <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
                             <MDBRow className="g-0">
-                                <MDBCol md="4" className="gradient-custom">
-                                    <MDBCardImage 
-                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp" 
-                                        alt="Avatar" 
-                                        className="my-5" 
-                                        fluid 
-                                    />
-                                    <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
-                                    <MDBCardText>Web Designer</MDBCardText>
+                                <MDBCol md="4" className="gradient-custom text-center text-white"
+                                    style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
+                                    <MDBTypography tag="h5">{language}</MDBTypography>
                                     <MDBIcon far icon="edit mb-5" />
                                 </MDBCol>
                                 <MDBCol md="8">
@@ -65,7 +60,7 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
                                             </MDBCol>
                                         </MDBRow>
                                         <MDBIcon icon="arrow-right" className="float-end" onClick={() => setIsFlipped(!isFlipped)} />
-                                        <div className="d-flex justify-content-start">
+                                        <div className="d-flex justify-content-between align-items-end">
                                             <MDBBtn onClick={() => onEasy(flashcard.id)}>Easy</MDBBtn>
                                             <MDBBtn onClick={onHard}>Hard</MDBBtn>
                                         </div>
