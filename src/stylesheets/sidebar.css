@@ -1,25 +1,86 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+
 .sidebar {
-    background-color: #e0e0e0;
-    width: 250px;
-    height: 100vh; /* Set the height to 100% of the viewport height to span from top to bottom. */
-    padding: 20px;
-    position: fixed; /* Keep the sidebar fixed on the screen. */
+    flex-grow: 1; /* make sidebar grow & take up remaining space */
+    width: 240px;
+    color: #FFFFFF;
+    /* background: #bfd5e7; */
+    background: rgba(191, 213, 231, 0.7);
+    overflow-y: scroll;
+}
+
+
+/* Sidebar CSS */
+.sidebar-header h2 {
+    margin-top: 30px;
+    margin-bottom: 3px;
+    text-align: center;
+    color: #3333;
+    font-size: 30px;
+}
+
+.deck-instruction {
+    text-align: center;
+    font-size: 18px;
+    color: #3333; 
+    margin-bottom: 10px;
+}
+
+.deck-list {
+    list-style: none;
+    padding: 0;
 }
 
 .deck-item {
-    background-color: #f5f5f5; /* Lighter gray background for each deck. */
-    margin-bottom: 15px; /* Spacing between deck items. */
-    border-radius: 5px; /* Round the corners a bit for aesthetics. */
+    width: 70%;
+    height: 90px;
+    margin: 5px auto;
+    position: relative;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     align-items: center;
-    padding: 10px; /* Padding inside each deck item. */
+    padding: 10px;
+    background: linear-gradient(90deg, #cfecd0, #ffc5ca);
+    margin-bottom: 20px;
+
+    border-radius: 5px;
+}
+
+.deck-item:hover {
+    background: #cfecd0;
 }
 
 .delete-button {
-    background-color: transparent;
-    color: #dc3545;
-    border: none;
-    padding: 5px 10px;
+    position: absolute; /* position it absolutely within .deck-item */
+    right: 10px;
+    top: 50%;
+    padding: 0;
     cursor: pointer;
+    /* padding: 5px 10px; */
 }
+
+.deck-name {
+    color: white;
+    margin-top: 18px;
+    font-size: 35px;
+    display: block;  /* to make it occupy its own line */
+    text-align: center;
+}
+
+.card-count {
+    color: white;
+    font-size: 18px;
+    display: block;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
