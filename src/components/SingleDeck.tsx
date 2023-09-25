@@ -14,26 +14,23 @@ const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, flashcardIndex, onEasy,
     if (selectedDeck) {
         const currentFlashcard = selectedDeck.flashcards[flashcardIndex];
 
-        // check if currentFlashcardIndex within bounds
-        if (flashcardIndex >= 0 && flashcardIndex < selectedDeck.flashcards.length) {
+        const isLastCard = flashcardIndex >= selectedDeck.flashcards.length;
 
-            return (
-                <>
-                    {/* flashcard counter */}
-                    <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
-                    <SingleFlashcard
-                        flashcard={currentFlashcard}  // pass current flashcard in the iteration
-                        onEasy={onEasy}
-                        onHard={onHard}
-                        language={selectedDeck.name}   // pass name of deck as language prop
-                    />
-                </>
-            );
-        } else {
-            return <div>No more flashcards!</div>;
-        } 
+        return (
+            <>
+                {/* flashcard counter */}
+                <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
+                <SingleFlashcard
+                    flashcard={currentFlashcard}  // pass current flashcard in the iteration
+                    onEasy={onEasy}
+                    onHard={onHard}
+                    language={selectedDeck.name}   // pass name of deck as language prop
+                    noMoreFlashcards={isLastCard}
+                />
+            </>
+        );
     } else {
-        return <div>Select a deck to start</div>;
+        return null;
     }
 };
 
