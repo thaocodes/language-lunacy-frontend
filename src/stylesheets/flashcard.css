@@ -1,11 +1,70 @@
-/* styles.css */
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #f6d365;
+.flashcard-container {
+    padding: 10px;
+    background-color: #f4f5f7;
+    text-align: center;
+    width: 100%;
+    max-width: 500px; /* Adjust width of the flashcard */
+    margin-right: auto;
+    margin-left: auto;
+}
 
-    background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+.flip-icon {
+    /* position: absolute; */
+    top: 10px;
 
-    background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
-    height: 100%; /* Ensures gradient sidebar covers whole height */
+    right: 10px; /* Position icon to the right */
+}
+
+.flashcard-header {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.language {
+    font-weight: bold;
+}
+
+
+.flashcard {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.flip-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.flashcard-content {
+    margin: 10px 0;
+}
+
+.flashcard-actions {
+    margin-top: 20px;
+}
+
+button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.no-more-cards {
+    padding: 50px;
+    font-size: 1.5rem;
+    color: #888;
 }
 
