@@ -1,10 +1,6 @@
 import React, {useState} from 'react'
 import { Flashcard } from './types';
-import { 
-    MDBCol, MDBContainer, MDBRow, MDBCard, 
-    MDBCardText, MDBCardBody,
-    MDBTypography, MDBIcon, MDBBtn 
-} from 'mdb-react-ui-kit';
+import { FaReply } from 'react-icons/fa';
 import '../stylesheets/flashcard.css';
 
 
@@ -14,9 +10,10 @@ interface FlashcardProps  {
     language: string;
     onEasy: (flashcardId: number) => void;
     onHard: () => void;
+    noMoreFlashcards: boolean;
 }
 
-const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy, onHard }) => {
+const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy, onHard, noMoreFlashcards }) => {
     const [isFlipped, setIsFlipped] = useState<boolean>(false); // initial state shows {language} word
 
     console.log("Flashcard: ", flashcard); 
@@ -24,6 +21,10 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
 
     console.log("flashcard?.english: ", flashcard?.english);
     console.log("flashcard?.[language]: ", flashcard?.[language]); // access property dynamically 
+
+    if (noMoreFlashcards) {
+        return <div className="no-more-flashcards">No more Flashcards!</div>;
+    }
     
     if (!flashcard) {
         console.log("NO FLASHCARD!!")
@@ -33,45 +34,22 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
         
 
     return (
-        <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
-            <MDBContainer className="py-5 h-100">
-                <MDBRow className="justify-content-center align-items-center h-100">
-                    <MDBCol lg="6" className="mb-4 mb-lg-0">
-                        <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
-                            <MDBRow className="g-0">
-                                <MDBCol md="4" className="gradient-custom text-center text-white"
-                                    style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                                    <MDBTypography tag="h5">{language}</MDBTypography>
-                                    <MDBIcon far icon="edit mb-5" />
-                                </MDBCol>
-                                <MDBCol md="8">
-                                    <MDBCardBody className="p-4">
-                                        <MDBTypography tag="h6">FlashCard Question</MDBTypography>
-                                        {/* set isFlipped to true to show English translation */}
-                                        <MDBIcon icon="redo" className="float-end" onClick={() => setIsFlipped(!isFlipped)} />
-                                        <hr className="mt-0 mb-4" />
-                                        <MDBRow className="pt-1">
-                                            <MDBCol size="12" className="mb-3">
-                                                <MDBCardText className="text-muted">
-                                                    {/* if `isFlipped` is true, display English, else display language
-                                                        check if those properties exist on flashcard object */}
-                                                    {isFlipped ? flashcard?.english : flashcard?.[language]}
-                                                </MDBCardText>
-                                            </MDBCol>
-                                        </MDBRow>
-                                        <MDBIcon icon="arrow-right" className="float-end" onClick={() => setIsFlipped(!isFlipped)} />
-                                        <div className="d-flex justify-content-between align-items-end">
-                                            <MDBBtn onClick={() => onEasy(flashcard.id)}>Easy</MDBBtn>
-                                            <MDBBtn onClick={onHard}>Hard</MDBBtn>
-                                        </div>
-                                    </MDBCardBody>
-                                </MDBCol>
-                            </MDBRow>
-                        </MDBCard>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
-        </section>
+        <div className="flashcard-container">
+            <div className="flashcard-header">
+                <span className="language">{language}</span>
+        
+            </div>
+            <div className="flashcard">
+                <FaReply className="flip-icon" onClick={() => setIsFlipped(!isFlipped)} /> 
+                <div className="flashcard-content">
+                    {isFlipped ? flashcard.english : flashcard[language]}
+                </div>
+                <div className="flashcard-actions">
+                    <button onClick={() => onEasy(flashcard.id)}>Easy</button>
+                    <button onClick={onHard}>Hard</button>
+                </div>
+            </div>
+        </div>
     );
 }
 
