@@ -12,6 +12,10 @@ type DeckProps = {
 const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, flashcardIndex, onEasy, onHard }) => {
 
     if (selectedDeck) {
+         // if deck runs out of cards, display message
+        if (selectedDeck.flashcards.length === 0)
+            return <div className="no-more-cards">No more Flashcards!</div>;
+
         const currentFlashcard = selectedDeck.flashcards[flashcardIndex];
 
         const isLastCard = flashcardIndex >= selectedDeck.flashcards.length;
