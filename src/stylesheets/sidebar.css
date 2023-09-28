@@ -2,11 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
 .sidebar {
-    flex-grow: 1; /* make sidebar grow & take up remaining space */
-    width: 240px;
     color: #FFFFFF;
-    /* background: #bfd5e7; */
-    background: rgba(191, 213, 231, 0.7);
     overflow-y: scroll;
 }
 
