@@ -126,7 +126,7 @@ const App: React.FC = () => {
         }
 
     return (
-        <div className="App app-container">
+        <div className="app-container">
             <span className="heading"></span>
             <Header 
                 language={language}
@@ -139,17 +139,21 @@ const App: React.FC = () => {
             />
             {/* if error truthy, display error message */}
             {error && <div className="error-message">{error}</div>}
-            <SingleDeck 
-                selectedDeck={selectedDeck}
-                flashcardIndex={flashcardIndex}
-                onEasy={onEasy}
-                onHard={onHard}
-            />
-            <Sidebar
-                deckList={deckList}
-                setDecklist={setDeckList}
-                handleSelectDeck={handleSelectDeck}
-            />
+            <div className="content">
+                <Sidebar
+                    deckList={deckList}
+                    setDecklist={setDeckList}
+                    handleSelectDeck={handleSelectDeck}
+                />
+                <div className="main-content">
+                    <SingleDeck 
+                        selectedDeck={selectedDeck}
+                        flashcardIndex={flashcardIndex}
+                        onEasy={onEasy}
+                        onHard={onHard}
+                    />
+                </div>
+            </div>
         </div>
     );
 }
