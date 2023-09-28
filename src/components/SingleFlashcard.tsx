@@ -45,8 +45,8 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
                     {isFlipped ? flashcard.english : flashcard[language]}
                 </div>
                 <div className="flashcard-actions">
-                    <button onClick={() => onEasy(flashcard.id)}>Easy</button>
-                    <button onClick={onHard}>Hard</button>
+                    <button className="easy-button" onClick={() => onEasy(flashcard.id)}>Easy</button>
+                    <button className="hard-button" onClick={onHard}>Hard</button>
                 </div>
             </div>
         </div>

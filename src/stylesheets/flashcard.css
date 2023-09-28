@@ -6,13 +6,15 @@
     max-width: 500px; /* Adjust width of the flashcard */
     margin-right: auto;
     margin-left: auto;
+    margin-top: 80px;
 }
 
 .flip-icon {
     /* position: absolute; */
     top: 10px;
-
+    left: auto; 
     right: 10px; /* Position icon to the right */
+    transform: scaleX(-1); /* flip icon horizontally */
 }
 
 .flashcard-header {
@@ -26,6 +28,7 @@
 
 
 .flashcard {
+    min-height: 200px;
     position: relative;
     background: white;
     padding: 20px;
@@ -56,6 +59,14 @@ button {
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.hard-button {
+    background: red;
+}
+
+.hard-button:hover {
+    background: #d32f2f;
 }
 
 button:hover {
