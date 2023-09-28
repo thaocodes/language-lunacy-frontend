@@ -5,7 +5,29 @@
   height: 100vh;
 }
 
-
-.App {
-  text-align: center;
+.content {
+  display: flex; /* makes content a flex container for Sidebar and main-conent */
+  flex-grow: 1;  /* allows content to take up the remaining space */
 }
+
+.sidebar {
+  width: 240px;
+  background: rgba(191, 213, 231, 0.7);
+}
+
+
+.main-content {
+  flex-grow: 1; /* Allows main content to take the remaining space after sidebar */
+  overflow-y: auto;
+  position: relative;
+  padding: 20px;
+  background: red;
+}
+
+
+
+
+
+/* .App {
+  text-align: center;
+} */
