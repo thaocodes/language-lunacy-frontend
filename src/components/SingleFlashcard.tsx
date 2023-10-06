@@ -16,9 +16,6 @@ interface FlashcardProps  {
 const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy, onHard, noMoreFlashcards }) => {
     const [isFlipped, setIsFlipped] = useState<boolean>(false); // initial state shows {language} word
 
-    console.log("Flashcard: ", flashcard); 
-    console.log("Is Flipped: ", isFlipped);
-
     console.log("flashcard?.english: ", flashcard?.english);
     console.log("flashcard?.[language]: ", flashcard?.[language]); // access property dynamically 
 
@@ -29,7 +26,6 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
     if (!flashcard) {
         console.log("NO FLASHCARD!!")
         return null;    // return null or loading spinner, placeholder content
-
     }
         
 
