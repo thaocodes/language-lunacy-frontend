@@ -38,12 +38,6 @@
     flex-direction: column;
 }
 
-.flip-icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-}
 
 .flashcard-content {
     font-size: 5rem; 
