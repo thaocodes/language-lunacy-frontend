@@ -1,6 +1,7 @@
 import React from 'react'
 import { Deck } from './types';
 import SingleFlashcard from './SingleFlashcard';
+import '../stylesheets/deck.css';
 
 type DeckProps = {
     selectedDeck: Deck | null;
@@ -23,7 +24,9 @@ const SingleDeck: React.FC<DeckProps> = ({ selectedDeck, flashcardIndex, onEasy,
         return (
             <>
                 {/* flashcard counter */}
-                <div> Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}</div>
+                <div className="card-counter"> 
+                    Card {flashcardIndex + 1 } of {selectedDeck.flashcards.length}
+                </div>
                 <SingleFlashcard
                     flashcard={currentFlashcard}  // pass current flashcard in the iteration
                     onEasy={onEasy}
