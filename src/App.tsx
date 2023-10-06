@@ -11,26 +11,29 @@ const App: React.FC = () => {
     const [language, setLanguage] = useState<string>("");
     const [start, setStart] = useState<string>("");
     const [end, setEnd] = useState<string>("");
-    const [deckList, setDeckList] = useState<Deck[]>([]);
+    // const [deckList, setDeckList] = useState<Deck[]>([]);
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
     const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
 
+    // ====    RETRIEVE DATA from Local Storage   ==== // 
+    // call useState & pass it function instead of default value
+    // whatever is returned from function is the default value 
+    const [deckList, setDeckList] = useState<Deck[]>(() => {
+        const localData = localStorage.getItem("deck-list")
+        if (localData == null) return [] // don't have any value yet, return empty deckList
 
-    // retrieves persisted decks through local storage
-    useEffect(() => {
-        const data = localStorage.getItem("deck-list");
-        if (data) {
-        setDeckList(JSON.parse(data));
-        } else {
-        setDeckList([]);  // empty deck list?
-        }
-    }, []);
-
-    // persists decks to local storage
-    useEffect(() => {
-        localStorage.setItem("deck-list", JSON.stringify(deckList));
+        // otherwise parse what's in local storage & return it as default value
+        return JSON.parse(localData) 
     });
+
+
+    // ====    STORE DATA in Local Storage   ==== //
+    // useEffect returns nothing, takes function as arg
+    useEffect(() => {   // every time deckList changes, call this function
+        // set items property to JSON stringified version of deckList
+        localStorage.setItem("deck-list", JSON.stringify(deckList))
+    }, [deckList])
 
 
     // inputting language/start/end creates a new deck
