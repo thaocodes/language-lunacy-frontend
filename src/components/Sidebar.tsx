@@ -28,8 +28,6 @@ const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist }) =
             <div className="sidebar-header">
                 <h2>Decks</h2>
                 <div className="deck-instruction">
-                    {/* if theres at least 1 deck, display 'Select a Deck'
-                        otherwise, display 'Create a Deck!' */}
                     {deckList.length > 0 ? 'Select a Deck to Start' : 'Create a Deck!'}
                 </div>
                 <ul className="deck-list">
