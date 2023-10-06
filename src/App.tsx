@@ -11,17 +11,16 @@ const App: React.FC = () => {
     const [language, setLanguage] = useState<string>("");
     const [start, setStart] = useState<string>("");
     const [end, setEnd] = useState<string>("");
-    // const [deckList, setDeckList] = useState<Deck[]>([]);
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
     const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
 
     // ====    RETRIEVE DATA from Local Storage   ==== // 
     // call useState & pass it function instead of default value
-    // whatever is returned from function is the default value 
     const [deckList, setDeckList] = useState<Deck[]>(() => {
+        // fetches data associated w/ key "deck-list"
         const localData = localStorage.getItem("deck-list")
-        if (localData == null) return [] // don't have any value yet, return empty deckList
+        if (localData == null) return [] // if no value: we don't have any decks, so return empty deckList
 
         // otherwise parse what's in local storage & return it as default value
         return JSON.parse(localData) 
@@ -31,7 +30,7 @@ const App: React.FC = () => {
     // ====    STORE DATA in Local Storage   ==== //
     // useEffect returns nothing, takes function as arg
     useEffect(() => {   // every time deckList changes, call this function
-        // set items property to JSON stringified version of deckList
+        // set deck-list key to JSON stringified version of deckList
         localStorage.setItem("deck-list", JSON.stringify(deckList))
     }, [deckList])
 
@@ -120,6 +119,8 @@ const App: React.FC = () => {
     // keeps card in deck, moves to next card
     const onHard = () => {
         if (selectedDeck) {
+                // check if current flashcard is the last one in deck
+                // logical OR operator, if value on left || undefined/0/null: default to `1`
                 if (flashcardIndex >= (selectedDeck?.flashcards?.length || 1) - 1) {
                     setFlashcardIndex(0);  // reset to first flashcard if it was the last card
                 } else {
