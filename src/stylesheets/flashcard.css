@@ -6,11 +6,11 @@
     max-width: 500px; /* Adjust width of the flashcard */
     margin-right: auto;
     margin-left: auto;
-    margin-top: 80px;
+    margin-top: 40px;    /* adjust to move flashcard up/down page */
 }
 
 .flip-icon {
-    /* position: absolute; */
+    position: absolute;
     top: 10px;
     left: auto; 
     right: 10px; /* Position icon to the right */
@@ -34,6 +34,8 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .flip-icon {
@@ -44,16 +46,24 @@
 }
 
 .flashcard-content {
-    margin: 10px 0;
+    font-size: 5rem; 
+    font-weight: bold;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    flex-grow: 1; /* Allow content to take all available space */
+    margin: 50px 0;
 }
 
 .flashcard-actions {
-    margin-top: 20px;
+    margin-top: auto; /* Push buttons to the bottom */
+    padding-bottom: 10px; /* Add some padding at the bottom */
 }
 
 button {
     background: #4caf50;
     color: white;
+    font-weight: bold;
     border: none;
     padding: 10px 20px;
     margin: 5px;
@@ -66,11 +76,11 @@ button {
 }
 
 .hard-button:hover {
-    background: #d32f2f;
+    background: #f65b5b;
 }
 
 button:hover {
-    background: #45a049;
+    background: #b9e8ba;
 }
 
 .no-more-cards {
