@@ -1,0 +1,41 @@
+/* Center the form in the middle of the page */
+.deck-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 600px;
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add some style to the input and button */
+.deck-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+/* After deck title submission, show this */
+.add-flashcard-prompt {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.add-flashcard-prompt button {
+    background-color: #4CAF50;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;  /* space between text and icon */
+}
