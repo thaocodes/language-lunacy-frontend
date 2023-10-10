@@ -5,6 +5,7 @@ import SingleDeck from './components/SingleDeck';
 import axios from 'axios'; 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import DeckForm from './components/DeckForm';
 
 
 const App: React.FC = () => {
@@ -14,7 +15,9 @@ const App: React.FC = () => {
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
     const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
-    const [deckTitle, setDeckTitle] = useState<string>("");
+     // toggle deck form visibility 
+    const [showForm, setShowForm] = useState<boolean>(false);
+
 
     // ====    RETRIEVE DATA from Local Storage   ==== // 
     // call useState & pass it function instead of default value
@@ -132,12 +135,14 @@ const App: React.FC = () => {
 
     // user created deck
     const addDeck = (title: string) => {
+        // create new userDeck object w/ the given title
         const userDeck: Deck = {
             id: Date.now(),
             name: title,
             flashcards: [],
         }
-        
+
+        // add new deck to deckList
         setDeckList(deckList => [...deckList, userDeck]);
     }
 
@@ -161,9 +166,11 @@ const App: React.FC = () => {
                     deckList={deckList}
                     setDecklist={setDeckList}
                     handleSelectDeck={handleSelectDeck}
-                    addDeck={addDeck}
+                    setShowForm={setShowForm}
                 />
                 <div className="main-content">
+                    {/* only render DeckForm if `showForm` is true */}
+                    {showForm && <DeckForm addDeck={addDeck} />}
                     <SingleDeck 
                         selectedDeck={selectedDeck}
                         flashcardIndex={flashcardIndex}
