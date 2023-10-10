@@ -1,6 +1,6 @@
 import React from 'react'
 import { Deck } from './types';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaPlus } from 'react-icons/fa';
 import '../stylesheets/sidebar.css';
 
 
@@ -8,10 +8,11 @@ type Props = {
     deckList: Deck[];
     handleSelectDeck: (deck: Deck) => void;
     setDecklist: React.Dispatch<React.SetStateAction<Deck[]>>;
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // map over deckList to display each deck
-const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist }) => {
+const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist, setShowForm }) => {
      // filters deckList to exclude deck with the given `id`
     const deleteDeck = (id: number) => {
         // if deck.id does not match id, return it
@@ -23,9 +24,12 @@ const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist }) =
         return string.charAt(0).toUpperCase() + string.slice(1); // returns string from 1st index to the end
     }
 
+
     return (
         <div className="sidebar">
             <div className="sidebar-header">
+                {/* show deck form when + button is clicked */}
+                <FaPlus className="add-deck-button" onClick={() => setShowForm(true)} />
                 <h2>Decks</h2>
                 <div className="deck-instruction">
                     {deckList.length > 0 ? 'Select a Deck to Start' : 'Create a Deck!'}
