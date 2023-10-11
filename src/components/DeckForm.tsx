@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import '../stylesheets/deckform.css';
+import FlashcardForm from './FlashcardForm';
 
 
 type Props = {
     addDeck: (title: string) => void;
+    addFlashcard: (question: string, answer: string) =>void;
 }
 
-const DeckForm: React.FC<Props> = ({ addDeck }) => {
+const DeckForm: React.FC<Props> = ({ addDeck, addFlashcard }) => {
     const [title, setTitle] = useState<string>("");
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -22,7 +24,7 @@ const DeckForm: React.FC<Props> = ({ addDeck }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="deck-title">Deck Title</label>
+            <label htmlFor="deck-title"></label>
             <input
                 type="text"
                 id="deck-title"
@@ -32,6 +34,7 @@ const DeckForm: React.FC<Props> = ({ addDeck }) => {
                 placeholder="Enter deck title"
             />
             <button type="submit">Submit</button>
+            <FlashcardForm addFlashcard={addFlashcard} />
         </form>
     );
 }
