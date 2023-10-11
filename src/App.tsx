@@ -146,6 +146,31 @@ const App: React.FC = () => {
         setDeckList(deckList => [...deckList, userDeck]);
     }
 
+    const addFlashcard = (question: string, answer:string) => {
+        if (selectedDeck) {
+            // create new flashcard object
+            const userFlashcard: Flashcard = {
+                id: Date.now(),
+                // assign number to flashcard based on order added
+                number: selectedDeck.flashcards.length + 1, 
+                english: question,
+                difficulty: "",
+                [language.toLowerCase()]: answer, 
+            };
+
+            // update `selectedDeck`'s flashcards to include new card
+            const updatedFlashcards = [...selectedDeck.flashcards, userFlashcard];
+            
+            // update state of selected deck w/ newly added flashcard
+            setSelectedDeck(prevDeck => {
+                if (prevDeck) {
+                    return { ...prevDeck, flashcards: updatedFlashcards };
+                }
+                return null;
+            });
+        }
+    }
+
 
     return (
         <div className="app-container">
@@ -170,7 +195,7 @@ const App: React.FC = () => {
                 />
                 <div className="main-content">
                     {/* only render DeckForm if `showForm` is true */}
-                    {showForm && <DeckForm addDeck={addDeck} />}
+                    {showForm && <DeckForm addDeck={addDeck} addFlashcard={addFlashcard} />}
                     <SingleDeck 
                         selectedDeck={selectedDeck}
                         flashcardIndex={flashcardIndex}
