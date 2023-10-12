@@ -6,6 +6,7 @@ import axios from 'axios';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import DeckForm from './components/DeckForm';
+import FlashcardForm from './components/FlashcardForm';
 
 
 const App: React.FC = () => {
@@ -16,7 +17,8 @@ const App: React.FC = () => {
     const [flashcardIndex, setFlashcardIndex] = useState<number>(0); 
     const [error, setError] = useState<string>(""); 
      // toggle deck form visibility 
-    const [showForm, setShowForm] = useState<boolean>(false);
+    const [deckForm, setDeckForm] = useState<boolean>(false);
+    const [showFlashcardForm, setShowFlashcardForm] = useState<boolean>(false);
 
 
     // ====    RETRIEVE DATA from Local Storage   ==== // 
@@ -191,11 +193,14 @@ const App: React.FC = () => {
                     deckList={deckList}
                     setDecklist={setDeckList}
                     handleSelectDeck={handleSelectDeck}
-                    setShowForm={setShowForm}
+                    setDeckForm={setDeckForm}
+                    setShowFlashcardForm={setShowFlashcardForm}
+                    addFlashcard={addFlashcard}
                 />
                 <div className="main-content">
                     {/* only render DeckForm if `showForm` is true */}
-                    {showForm && <DeckForm addDeck={addDeck} addFlashcard={addFlashcard} />}
+                    {deckForm && <DeckForm addDeck={addDeck} />}
+                    {showFlashcardForm && <FlashcardForm addFlashcard={addFlashcard} />}
                     <SingleDeck 
                         selectedDeck={selectedDeck}
                         flashcardIndex={flashcardIndex}
