@@ -8,11 +8,13 @@ type Props = {
     deckList: Deck[];
     handleSelectDeck: (deck: Deck) => void;
     setDecklist: React.Dispatch<React.SetStateAction<Deck[]>>;
-    setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setDeckForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowFlashcardForm: React.Dispatch<React.SetStateAction<boolean>>;
+    addFlashcard: (question: string, answer: string) => void;
 }
 
 // map over deckList to display each deck
-const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist, setShowForm }) => {
+const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist, setDeckForm, setShowFlashcardForm, addFlashcard }) => {
      // filters deckList to exclude deck with the given `id`
     const deleteDeck = (id: number) => {
         // if deck.id does not match id, return it
@@ -29,7 +31,7 @@ const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist, set
         <div className="sidebar">
             <div className="sidebar-header">
                 {/* show deck form when + button is clicked */}
-                <FaPlus className="add-deck-button" onClick={() => setShowForm(true)} />
+                <FaPlus className="add-deck-button" onClick={() => setDeckForm(true)} />
                 <h2>Decks</h2>
                 <div className="deck-instruction">
                     {deckList.length > 0 ? 'Select a Deck to Start' : 'Create a Deck!'}
@@ -43,6 +45,7 @@ const Sidebar: React.FC<Props> = ({ deckList, handleSelectDeck, setDecklist, set
                             {/* for each deck, display name, card count, delete button */}
                             <div className="deck-name">{capitalizeDeckName(deck.name)}</div>
                             <div className="card-count">({deck.flashcards.length} cards)</div>
+                            <FaPlus className="add-flashcard-button" onClick={() => setShowFlashcardForm(true)} />
                             <button 
                                 className="delete-button"
                                 // prevent clicking delete button from also triggering `handleSelectDeck` 
