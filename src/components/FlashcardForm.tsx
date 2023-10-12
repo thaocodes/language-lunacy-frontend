@@ -10,6 +10,8 @@ const FlashcardForm: React.FC<Props> = ({ addFlashcard }) => {
     const [answer, setAnswer] = useState<string>("");
 
     const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        
         // remove white spaces from both ends
         if (question.trim() && answer.trim()) { 
             addFlashcard(question, answer);
