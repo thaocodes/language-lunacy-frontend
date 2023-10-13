@@ -26,7 +26,7 @@ const App: React.FC = () => {
     const [deckList, setDeckList] = useState<Deck[]>(() => {
         // fetches data associated w/ key "deck-list"
         const localData = localStorage.getItem("deck-list")
-        if (localData == null) return [] // if no value: we don't have any decks, so return empty deckList
+        if (localData == null) return [] // if no value: we don't have any decks, return empty deckList
 
         // otherwise parse what's in local storage & return it as default value
         return JSON.parse(localData) 
@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
     // ====    STORE DATA in Local Storage   ==== //
     // useEffect returns nothing, takes function as arg
-    useEffect(() => {   // every time deckList changes, call this function
+    useEffect(() => {   // everytime deckList changes, call this function
         // set deck-list key to JSON stringified version of deckList
         localStorage.setItem("deck-list", JSON.stringify(deckList))
     }, [deckList])
@@ -148,6 +148,7 @@ const App: React.FC = () => {
         setDeckList(deckList => [...deckList, userDeck]);
     }
 
+    // user created flashcard
     const addFlashcard = (question: string, answer:string) => {
         if (selectedDeck) {
             // create new flashcard object
@@ -159,6 +160,8 @@ const App: React.FC = () => {
                 difficulty: "",
                 [language.toLowerCase()]: answer, 
             };
+            console.log("QUESTION: ", question)
+            console.log("ANSWER: ", answer)
 
             // update `selectedDeck`'s flashcards to include new card
             const updatedFlashcards = [...selectedDeck.flashcards, userFlashcard];
@@ -170,6 +173,24 @@ const App: React.FC = () => {
                 }
                 return null;
             });
+
+            // update deckList to reflect changes
+            setDeckList(prevDeckList => {
+                // find index of selected deck in deckList
+                // if match found, gives index of the deck otherwise findIndex returns -1
+                const deckIndex = prevDeckList.findIndex(deck => deck.id === selectedDeck.id); 
+
+                // if found, update that specific deck
+                if (deckIndex > -1) { // > -1 means deck was found
+                    const updatedDeckList = [...prevDeckList];    // create copy of prevDeckList
+                    // updates deck at the index found in our copy
+                    // takes all properties of `selectedDeck` & updates it's `flashcards` w/ newly added flashcard
+                    updatedDeckList[deckIndex] = { ...selectedDeck, flashcards: updatedFlashcards };
+                    return updatedDeckList; 
+                }
+                // if not found, return original deckList
+                return prevDeckList;
+            })
         }
     }
 
