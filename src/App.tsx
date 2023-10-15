@@ -153,49 +153,62 @@ const App: React.FC = () => {
     }
 
 
-    // user created flashcard
-    const addFlashcard = (question: string, answer:string) => {
+    // ==== Add New Flashcard ==== //
+
+    // updates currently selected deck's flashcards
+    const updateSelectedDeckWithFlashcard = (newFlashcard: Flashcard) => {
+        setSelectedDeck(prevDeck => {
+            if (prevDeck) {
+                // return new `Deck` object by spreading prev deck's properties
+                // append newFlashcard to flashcards array
+                return { ...prevDeck, flashcards: [...prevDeck.flashcards, newFlashcard] };
+            }
+            // if no previously selected deck, 
+            return null;
+        });
+    }
+
+    // updates list of decks to include new flashcard for the selected deck
+    const updateDeckListWithFlashcard = (newFlashcard: Flashcard) => {
+        setDeckList(prevDeckList => {
+            // find index of currently selected deck within list of decks
+            // findIndex returns -1 if no match
+            const deckIndex = prevDeckList.findIndex(deck => deck.id === selectedDeck?.id);
+
+            // if selected deck is found within list of decks
+            if (deckIndex > -1) {
+                const updatedDeckList = [...prevDeckList];  // create copy of prevDeckList
+
+                if (selectedDeck) {
+                    // update deck at the found index w/ its properties
+                    updatedDeckList[deckIndex] = {
+                        id: selectedDeck.id,
+                        name: selectedDeck.name,
+                        flashcards: [...selectedDeck.flashcards, newFlashcard] // append new flashcard to flashcards array
+                    };
+                }
+                return updatedDeckList;
+            }
+            // if selected deck not found
+            return prevDeckList;
+        });
+    }
+
+    // creates new flashcard & adds it to currently selected deck & DeckList
+    const addFlashcard = (question: string, answer: string) => {
         if (selectedDeck) {
             // create new flashcard object
             const userFlashcard: Flashcard = {
                 id: Date.now(),
-                // assign number to flashcard based on order added
-                number: selectedDeck.flashcards.length + 1, 
-                english: question,
+                number: selectedDeck.flashcards.length + 1,  // position # for flashcard
+                english: answer,
                 difficulty: "",
-                [language.toLowerCase()]: answer, 
+                userQuestion: question
             };
-            console.log("QUESTION: ", question)
-            console.log("ANSWER: ", answer)
-
-            // update `selectedDeck`'s flashcards to include new card
-            const updatedFlashcards = [...selectedDeck.flashcards, userFlashcard];
-            
-            // update state of selected deck w/ newly added flashcard
-            setSelectedDeck(prevDeck => {
-                if (prevDeck) {
-                    return { ...prevDeck, flashcards: updatedFlashcards };
-                }
-                return null;
-            });
-
-            // update deckList to reflect changes
-            setDeckList(prevDeckList => {
-                // find index of selected deck in deckList
-                // if match found, gives index of the deck otherwise findIndex returns -1
-                const deckIndex = prevDeckList.findIndex(deck => deck.id === selectedDeck.id); 
-
-                // if found, update that specific deck
-                if (deckIndex > -1) { // > -1 means deck was found
-                    const updatedDeckList = [...prevDeckList];    // create copy of prevDeckList
-                    // update deck at the index found in copy
-                    // takes all properties of `selectedDeck` & updates it's `flashcards` w/ newly added flashcard
-                    updatedDeckList[deckIndex] = { ...selectedDeck, flashcards: updatedFlashcards };
-                    return updatedDeckList; 
-                }
-                // if not found, return original deckList
-                return prevDeckList;
-            })
+            // add new flashcard to currently selected deck
+            updateSelectedDeckWithFlashcard(userFlashcard);
+            // update deckList to include new flashcard for selected deck
+            updateDeckListWithFlashcard(userFlashcard);
         }
     }
 
