@@ -18,6 +18,9 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
 
     console.log("flashcard?.english: ", flashcard?.english);
     console.log("flashcard?.[language]: ", flashcard?.[language]); // access property dynamically 
+    console.log("language: ", language);
+    console.log("Entire flashcard: ", flashcard);
+
 
     if (noMoreFlashcards) {
         return <div className="no-more-flashcards">No more Flashcards!</div>;
@@ -38,7 +41,7 @@ const SingleFlashcard: React.FC<FlashcardProps> = ({ flashcard, language, onEasy
             <div className="flashcard">
                 <FaReply className="flip-icon" onClick={() => setIsFlipped(!isFlipped)} /> 
                 <div className="flashcard-content">
-                    {isFlipped ? flashcard.english : flashcard[language]}
+                    {isFlipped ? flashcard.english : (flashcard.userQuestion || flashcard[language] || flashcard[""])}
                 </div>
                 <div className="flashcard-actions">
                     <button className="easy-button" onClick={() => onEasy(flashcard.id)}>Easy</button>
