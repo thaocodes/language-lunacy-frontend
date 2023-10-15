@@ -80,12 +80,14 @@ const App: React.FC = () => {
             setEnd("");
         };
 
+
     // sets selected deck to this deck
     const handleSelectDeck = (deck: Deck) => {
         setSelectedDeck(deck);
         // reset flashcard index whenever new deck is selected
         setFlashcardIndex(0);   
     }
+
 
     // prevFlashcard holds state of flashcard before update
     const nextFlashcard = () => {
@@ -94,6 +96,7 @@ const App: React.FC = () => {
             setFlashcardIndex(prevFlashcard => Math.min(prevFlashcard + 1, (selectedDeck?.flashcards?.length || 1) -1));
         }
     }
+
 
     // when clicked, removes flashcard from deck
     const onEasy = (id: number) => {
@@ -122,6 +125,7 @@ const App: React.FC = () => {
         }
     };
     
+
     // keeps card in deck, moves to next card
     const onHard = () => {
         if (selectedDeck) {
@@ -135,6 +139,7 @@ const App: React.FC = () => {
             }
         }
 
+
     // user created deck
     const addDeck = (title: string) => {
         // create new userDeck object w/ the given title
@@ -143,10 +148,10 @@ const App: React.FC = () => {
             name: title,
             flashcards: [],
         }
-
         // add new deck to deckList
         setDeckList(deckList => [...deckList, userDeck]);
     }
+
 
     // user created flashcard
     const addFlashcard = (question: string, answer:string) => {
@@ -183,7 +188,7 @@ const App: React.FC = () => {
                 // if found, update that specific deck
                 if (deckIndex > -1) { // > -1 means deck was found
                     const updatedDeckList = [...prevDeckList];    // create copy of prevDeckList
-                    // updates deck at the index found in our copy
+                    // update deck at the index found in copy
                     // takes all properties of `selectedDeck` & updates it's `flashcards` w/ newly added flashcard
                     updatedDeckList[deckIndex] = { ...selectedDeck, flashcards: updatedFlashcards };
                     return updatedDeckList; 
