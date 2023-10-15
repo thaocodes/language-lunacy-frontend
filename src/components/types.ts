@@ -4,7 +4,9 @@ export interface Flashcard {
     number: number;
     english: string;
     difficulty: string;
-    [key: string]: string | number;   // allows for dynamic language property, adding an index signature 
+    // allows for dynamic language property, adding an index signature
+    [key: string]: string | number | undefined;    // add undefined so userQuestion doesn't error
+    userQuestion?: string;  // optional property
 }
 
 export interface Deck {
